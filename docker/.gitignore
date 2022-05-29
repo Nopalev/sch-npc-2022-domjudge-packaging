@@ -1,3 +1,5 @@
 /domjudge.tar.gz
 /chroot.tar.gz
 /judgehost.tar.gz
+.env
+database

@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  db:
+    container_name: mariadb
+    image: mariadb
+    env_file: [.env]
+    networks: [domserver-network]
+    restart: unless-stopped
+    volumes:
+      - ./database/:/var/lib/mysql/
+    command: --max-connections=1000
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin
+    environment:
+      - PMA_HOST=db
+    ports:
+      - 8081:80
+    networks: [domserver-network]
+    restart: unless-stopped
+  domserver:
+    container_name: domserver
+    image: zydhanlinnar11/alpro-domjudge:8.0.1
+    env_file: [.env]
+    ports:
+      - 8080:80
+    networks: [domserver-network]
+    restart: unless-stopped
+    depends_on:
+      - db
+
+networks:
+  domserver-network:

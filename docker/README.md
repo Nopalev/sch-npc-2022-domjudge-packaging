@@ -6,17 +6,18 @@ There is one container for running the domserver and one for running a judgehost
 
 The domserver container contains:
 
-* A setup script that will:
-    * Set up or update the database.
-    * Set up the webserver.
-* PHP-FPM and nginx for running the web interface.
-* Scripts for reading the log files of the webserver.
+- A setup script that will:
+  - Set up or update the database.
+  - Set up the webserver.
+- PHP-FPM and nginx for running the web interface.
+- Scripts for reading the log files of the webserver.
 
 The judgehost container contains a working judgehost with cgroup support and a chroot for running the submissions. C, C++ and Java are currently supported.
 
 These containers do not include MySQL / MariaDB; the [MariaDB](https://hub.docker.com/r/_/mariadb/) Docker container does this better than we ever could.
 
 #### Table of Contents
+
 - [Using the images](#using-the-images)
   - [MariaDB container](#mariadb-container)
   - [DOMserver container](#domserver-container)
@@ -74,16 +75,16 @@ Make a note of the password for the `judgehost` user, it will be used when the j
 
 The following environment variables are supported by the `domserver` container:
 
-* `CONTAINER_TIMEZONE` (defaults to `Europe/Amsterdam`): allows you to change the timezone used inside the container.
-* `MYSQL_HOST` (defaults to `mariadb`): set the host to connect to for MySQL. Can be hostname or IP. Docker will add hostnames for any containers you `--link`, so in the example above, the MariaDB container will be available under the hostname `mariadb`.
-* `MYSQL_USER` (defaults to `domjudge`): set the user to use for connecting to MySQL.
-* `MYSQL_PASSWORD` (defaults to `domjudge`): set the password to use for connecting to MySQL.
-* `MYSQL_ROOT_PASSWORD` (defaults to `domjudge`): set the root password to use for connecting to MySQL.
-* `MYSQL_DATABASE` (defaults to `domjudge`): set the database to use.
-* `DJ_DB_INSTALL_BARE` (defaults to `0`): set to `1` to do a `bare-install` for the database instead of a normal `install`.
-* `FPM_MAX_CHILDREN` (defaults to `40`): the maximum number of PHP FPM children to spawn.
-* `TRUSTED_PROXIES` (defaults to empty): The IP list of trusted proxy servers, separated by a comma(`,`).
-* `WEBAPP_BASEURL` (defaults to `/`): The Base Url of DOMserver. Such as `/domjudge`, You can access the DOMserver homepage via `http://localhost/domjudge`.
+- `CONTAINER_TIMEZONE` (defaults to `Europe/Amsterdam`): allows you to change the timezone used inside the container.
+- `MYSQL_HOST` (defaults to `mariadb`): set the host to connect to for MySQL. Can be hostname or IP. Docker will add hostnames for any containers you `--link`, so in the example above, the MariaDB container will be available under the hostname `mariadb`.
+- `MYSQL_USER` (defaults to `domjudge`): set the user to use for connecting to MySQL.
+- `MYSQL_PASSWORD` (defaults to `domjudge`): set the password to use for connecting to MySQL.
+- `MYSQL_ROOT_PASSWORD` (defaults to `domjudge`): set the root password to use for connecting to MySQL.
+- `MYSQL_DATABASE` (defaults to `domjudge`): set the database to use.
+- `DJ_DB_INSTALL_BARE` (defaults to `0`): set to `1` to do a `bare-install` for the database instead of a normal `install`.
+- `FPM_MAX_CHILDREN` (defaults to `40`): the maximum number of PHP FPM children to spawn.
+- `TRUSTED_PROXIES` (defaults to empty): The IP list of trusted proxy servers, separated by a comma(`,`).
+- `WEBAPP_BASEURL` (defaults to `/`): The Base Url of DOMserver. Such as `/domjudge`, You can access the DOMserver homepage via `http://localhost/domjudge`.
 
 #### Passwords through files
 
@@ -114,9 +115,9 @@ If you have named your container something other than `domserver`, be sure to ch
 
 The following commands are available:
 
-* `nginx-access-log`: tail the access log of nginx.
-* `nginx-error-log`: tail the error log of nginx.
-* `symfony-log`: for DOMjudge using Symfony (i.e. 6.x and higher), tail the symfony log.
+- `nginx-access-log`: tail the access log of nginx.
+- `nginx-error-log`: tail the error log of nginx.
+- `symfony-log`: for DOMjudge using Symfony (i.e. 6.x and higher), tail the symfony log.
 
 Of course, you can always run `docker exec -it domserver bash` to get a bash shell inside the container.
 
@@ -146,19 +147,20 @@ If the judgedaemon stops for whatever reason, you should be able to see the erro
 
 The following environment variables are supported by the `judgehost` container:
 
-* `CONTAINER_TIMEZONE` (defaults to `Europe/Amsterdam`): allows you to change the timezone used inside the container.
-* `DOMSERVER_BASEURL` (defaults to `http://domserver/`): base URL where the domserver can be found. The judgehost uses this to connect to the API. **Do not add `api` yourself, as the container will do this!**
-* `JUDGEDAEMON_USERNAME` (defaults to `judgehost`): username used to connect to the API.
-* `JUDGEDAEMON_PASSWORD` (defaults to `password`): password used to connect to the API. This should be the password displayed for the `judgehost` user when the `domserver` container was started. Like with the mysql passwords, you can also set `JUDGEDAEMON_PASSWORD_FILE` to a path containing the password instead.
-* `DAEMON_ID` (defaults to `0`): ID of the daemon to use for this judgedaemon. If you start multiple judgehosts on one (physical) machine, make sure each one has a different `DAEMON_ID`.
-* `DOMJUDGE_CREATE_WRITABLE_TEMP_DIR` (defaults to `0`): if set to 1, a writable temporary directory will be created for submissions. This only works for DOMjudge versions >= 6.1.
-* `RUN_USER_UID_GID` (defaults to `62860`): UID/GID of the user that will submissions. Make sure this UID/GID is **not** used on your host OS.
+- `CONTAINER_TIMEZONE` (defaults to `Europe/Amsterdam`): allows you to change the timezone used inside the container.
+- `DOMSERVER_BASEURL` (defaults to `http://domserver/`): base URL where the domserver can be found. The judgehost uses this to connect to the API. **Do not add `api` yourself, as the container will do this!**
+- `JUDGEDAEMON_USERNAME` (defaults to `judgehost`): username used to connect to the API.
+- `JUDGEDAEMON_PASSWORD` (defaults to `password`): password used to connect to the API. This should be the password displayed for the `judgehost` user when the `domserver` container was started. Like with the mysql passwords, you can also set `JUDGEDAEMON_PASSWORD_FILE` to a path containing the password instead.
+- `DAEMON_ID` (defaults to `0`): ID of the daemon to use for this judgedaemon. If you start multiple judgehosts on one (physical) machine, make sure each one has a different `DAEMON_ID`.
+- `DOMJUDGE_CREATE_WRITABLE_TEMP_DIR` (defaults to `0`): if set to 1, a writable temporary directory will be created for submissions. This only works for DOMjudge versions >= 6.1.
+- `RUN_USER_UID_GID` (defaults to `62860`): UID/GID of the user that will submissions. Make sure this UID/GID is **not** used on your host OS.
 
 #### Example AWS Setup
 
 The [BAPC 2019 contest](https://2019.bapc.eu) used AWS EC2 to create judgehost workers. Thanks to Guillaume Derval—who also used AWS for the 2018 contest—we were able to create new judgehost instances with just one command. If you're using AWS to run the judgings during a contest, make sure to test all problems against the AWS environment as well. Testing against the live environment is always smart, but with AWS the performance can vary more than with dedicated hardware.
 
 The command is as follows, it uses the [AWS cli tool](https://github.com/aws/aws-cli):
+
 ```bash
 aws ec2 run-instances --launch-template LaunchTemplateId=$LAUNCH_TEMPLATE_ID,Version=2 --count 1 --cpu-options CoreCount=1,ThreadsPerCore=1 --user-data file://bapc-user-data.sh
 ```
@@ -207,13 +209,14 @@ If you want to build the images yourself, you can just run
 where `version` is the DOMjudge version to create the images for, e.g. `5.3.0`.
 
 To build domjudge with local sources, run
+
 ```bash
   tar --exclude-vcs -czf <path to domjudge-packaging>/docker/domjudge.tar.gz <domjudge source directory>
   cd <path to domjudge-packaging>/docker
   docker build -t domjudge -f domserver/Dockerfile .
 ```
-Note that the source directory name has to match `domjudge-*`.
 
+Note that the source directory name has to match `domjudge-*`.
 
 ## Customizing the image
 
@@ -224,7 +227,7 @@ This script runs all executable files in `/scripts/start.d/` in alphabetical ord
 Before that, all files from `/scripts/start.ro/` are copied into the `start.d` folder.
 To customize any settings (e.g. modify the nginx config), add scripts to `start.ro` via a bind mount.
 
-*Warning*: The scripts inside this folder have full access to everything in the container (including passwords etc.).
+_Warning_: The scripts inside this folder have full access to everything in the container (including passwords etc.).
 Only run trusted code there.
 
 To enable `REMOTE_USER` processing provided by a proxy in front of this image, mount the scripts from `examples/remote_user_scripts` to `start.ro`.
