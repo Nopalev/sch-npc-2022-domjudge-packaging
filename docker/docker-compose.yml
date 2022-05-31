@@ -20,7 +20,7 @@ services:
     restart: unless-stopped
   domserver:
     container_name: domserver
-    image: zydhanlinnar11/alpro-domjudge:8.0.1
+    image: zydhanlinnar11/alpro-domjudge:main
     env_file: [.env]
     ports:
       - 8080:80
