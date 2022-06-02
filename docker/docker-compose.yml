@@ -41,6 +41,19 @@ services:
     environment:
       - DAEMON_ID=0
       - DOMSERVER_BASEURL=http://domserver/
+  judgehost_core1:
+    container_name: judgehost_core1
+    image: domjudge/judgehost:8.0.0
+    env_file: [.env]
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    hostname: judgehost-alpro-main
+    restart: unless-stopped
+    networks: [domserver-network]
+    environment:
+      - DAEMON_ID=1
+      - DOMSERVER_BASEURL=http://domserver/
 
 networks:
   domserver-network:
